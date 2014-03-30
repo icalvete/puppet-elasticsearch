@@ -6,7 +6,8 @@ class elasticsearch (
   $repo_user     = elasticsearch::params::repo_user,
   $repo_pass     = elasticsearch::params::repo_pass,
   $repo_path     = elasticsearch::params::repo_path,
-  $repo_resource = elasticsearch::params::package
+  $repo_resource = elasticsearch::params::package,
+  $cluster       = elasticsearch::params::elasticsearch_cluster,
 
 ) inherits elasticsearch::params {
 
