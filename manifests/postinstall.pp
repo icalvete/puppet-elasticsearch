@@ -12,7 +12,7 @@ class elasticsearch::postinstall {
   exec {'apply_logstash_template':
     command   => "${elasticsearch::params::elasticsearch_dir_conf}/logstash_template.sh",
     tries     => 3,
-    try_sleep => 5,
+    try_sleep => 15,
     require   => File['config_logstash_template']
   }
 }
