@@ -1,5 +1,11 @@
 class elasticsearch::params {
 
+  $jetty                   = false
+  $elasticsearch_admin      = hiera('elasticsearch_admin')
+  $elasticsearch_admin_pass = hiera('elasticsearch_admin_pass')
+  $elasticsearch_user       = hiera('elasticsearch_user')
+  $elasticsearch_user_pass  = hiera('elasticsearch_user_pass')
+
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
       $elasticsearch_dir_conf     = '/etc/elasticsearch'

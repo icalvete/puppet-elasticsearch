@@ -1,13 +1,19 @@
 class elasticsearch (
 
-  $repo_scheme   = elasticsearch::params::repo_scheme,
-  $repo_domain   = elasticsearch::params::repo_domain,
-  $repo_port     = elasticsearch::params::repo_port,
-  $repo_user     = elasticsearch::params::repo_user,
-  $repo_pass     = elasticsearch::params::repo_pass,
-  $repo_path     = elasticsearch::params::repo_path,
-  $repo_resource = elasticsearch::params::package,
-  $cluster       = elasticsearch::params::elasticsearch_cluster,
+  $repo_scheme              = $elasticsearch::params::repo_scheme,
+  $repo_domain              = $elasticsearch::params::repo_domain,
+  $repo_port                = $elasticsearch::params::repo_port,
+  $repo_user                = $elasticsearch::params::repo_user,
+  $repo_pass                = $elasticsearch::params::repo_pass,
+  $repo_path                = $elasticsearch::params::repo_path,
+  $repo_resource            = $elasticsearch::params::package,
+  $cluster                  = $elasticsearch::params::elasticsearch_cluster,
+  $jetty                    = $elasticsearch::params::jetty,
+  $elasticsearch_admin      = $elasticsearch::params::elasticsearch_admin,
+  $elasticsearch_admin_pass = $elasticsearch::params::elasticsearch_admin_pass,
+  $elasticsearch_user       = $elasticsearch::params::elasticsearch_user,
+  $elasticsearch_user_pass  = $elasticsearch::params::elasticsearch_user_pass,
+  $template                 = undef
 
 ) inherits elasticsearch::params {
 
@@ -29,7 +35,8 @@ class elasticsearch (
 
   # Apply index templates (online operation. No restart required)
   class{'elasticsearch::postinstall':
-    require => Class['elasticsearch::service']
+    template => $template,
+    require  => Class['elasticsearch::service']
   }
   anchor{'elasticsearch::end':
     require => Class['elasticsearch::service']

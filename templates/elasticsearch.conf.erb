@@ -366,3 +366,10 @@ discovery.zen.ping.unicast.hosts: ["<%= scope.lookupvar('elasticsearch::params::
 index.store.type: niofs
 http.compression: true
 index.store.compress.stored: true
+<% if @jetty -%>
+http.type: com.sonian.elasticsearch.http.jetty.JettyHttpServerTransportModule
+sonian.elasticsearch.http.jetty:
+  config: jetty.xml,jetty-ssl.xml,jetty-hash-auth.xml,jetty-restrict-all.xml
+  ssl_port: 9443
+  keystore_password: "SP:1nc01vuz1w8f1w1c1rbu1rac1w261w9b1vub1NDQ"
+<% end -%>

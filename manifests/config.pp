@@ -43,4 +43,24 @@ class elasticsearch::config {
     minute  => '0',
     require => File['clean_indexes']
   }
+
+  if $elasticsearch::jetty {
+
+    file { 'config_elasticsearch_keystore':
+      path   => "${elasticsearch::params::elasticsearch_dir_conf}/keystore",
+      source => "puppet:///modules/${module_name}/keystore",
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+    }
+
+    file {'config_elasticsearch_jetty_users':
+      ensure  => present,
+      path    => "${elasticsearch::params::elasticsearch_dir_conf}/realm.properties",
+      content => template("${module_name}/realm.properties.erb"),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+  }
 }
