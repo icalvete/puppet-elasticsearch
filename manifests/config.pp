@@ -63,4 +63,12 @@ class elasticsearch::config {
       mode    => '0644',
     }
   }
+
+  if $elasticsearch::apache {
+
+    apache2::site{'elasticsearch.vhost.conf':
+      source  => 'elasticsearch/web/apache2/elasticsearch.vhost.conf.erb',
+      require => Class['roles::apache2_server']
+    }
+  }
 }

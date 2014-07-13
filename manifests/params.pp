@@ -1,10 +1,14 @@
 class elasticsearch::params {
 
-  $jetty                   = false
+  $org_domain               = hiera('org_domain')
+
+  $jetty                    = false
   $elasticsearch_admin      = hiera('elasticsearch_admin')
   $elasticsearch_admin_pass = hiera('elasticsearch_admin_pass')
   $elasticsearch_user       = hiera('elasticsearch_user')
   $elasticsearch_user_pass  = hiera('elasticsearch_user_pass')
+
+  $apache                   = false
 
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
