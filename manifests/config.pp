@@ -6,8 +6,18 @@ class elasticsearch::config {
   $script_name = 'clean_indexes.php'
   $script_path = "/root/${$script_name}"
 
-  file { $elasticsearch::params::elasticsearch_dir_conf:
-    ensure => directory
+  file { 'elasticsearch_dir':
+    ensure => directory,
+    path   => $elasticsearch::params::elasticsearch_dir_conf
+  }
+
+  file { 'elasticsearch_dir_scripts':
+    ensure  => directory,
+    path    => "${elasticsearch::params::elasticsearch_dir_conf}/scripts",
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => File['elasticsearch_dir']
   }
 
   file {'elasticsearch_conf_file':
