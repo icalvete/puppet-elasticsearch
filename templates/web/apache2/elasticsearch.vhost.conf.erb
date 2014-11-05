@@ -26,8 +26,8 @@ ServerAlias <%= sa %>
   DocumentRoot "/srv/elasticsearch/"
   #ErrorLog ${APACHE_LOG_DIR}/elasticsearch_error.log
   #CustomLog  ${APACHE_LOG_DIR}/elasticsearch.log common
-  ErrorLog '|/usr/bin/logger -p local4.info -t ::PRO::apache::error'
-  CustomLog '|/usr/bin/logger -p local4.info -t ::PRO::apache::access' combined_sp
+  ErrorLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::environment') -%>::error'
+  CustomLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::environment') -%>::access' combined_sp
 
   Header set Access-Control-Allow-Origin "<%= scope.lookupvar('elasticsearch::kibana_server') -%>"
   Header set Access-Control-Allow-Methods "GET,POST,HEAD,DELETE,PUT,OPTIONS"
