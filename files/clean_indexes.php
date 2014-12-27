@@ -33,17 +33,19 @@ $obj_node_status = json_decode($node_status);
 
 $today=date('Y-m-d', time());
 foreach ($obj_node_status->indices as $key => $value ) {
-        preg_match('/^logstash-([0-9]{4})\.([0-9]{2})\.([0-9]{2})/', $key, $matches);
-        $index = $matches[1].'-'.$matches[2].'-'.$matches[3];
-        $index_date = date_create($index);
-        $today_date = date_create($today);
+	$match = preg_match('/^logstash-([0-9]{4})\.([0-9]{2})\.([0-9]{2})/', $key, $matches);
+	if ($match) {
+        	$index = $matches[1].'-'.$matches[2].'-'.$matches[3];
+        	$index_date = date_create($index);
+        	$today_date = date_create($today);
         
-	$interval = date_diff($index_date, $today_date);
-	if ((int) $interval->format('%a') >= 10)
-        {
-                $url = "http://localhost:9200/$key/";
-                del_to_elasticsearch($url);
-        }
+		$interval = date_diff($index_date, $today_date);
+		if ((int) $interval->format('%a') >= 10)
+        	{
+                	$url = "http://localhost:9200/$key/";
+                	del_to_elasticsearch($url);
+		}
+	}
 }
 
 // close cURL resource, and free up system resources
