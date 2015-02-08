@@ -22,6 +22,7 @@ class elasticsearch (
   $aws_secret_access_key    = $elasticsearch::params::aws_secret_access_key,
   $aws_region               = $elasticsearch::params::aws_region,
   $aws_bucket               = $elasticsearch::params::aws_bucket,
+  $backup                   = $elasticsearch::params::backup
 
 ) inherits elasticsearch::params {
 
@@ -53,10 +54,14 @@ class elasticsearch (
     require  => Class['elasticsearch::service']
   }
   
-  class{'elasticsearch::backup':
-    require  => Class['elasticsearch::service']
+  if $backup {
+    class{'elasticsearch::backup':
+      require => Class['elasticsearch::service'],
+      before  => Anchor['elasticsearch::end']
+    }
   }
+
   anchor{'elasticsearch::end':
-    require => Class['elasticsearch::postinstall', 'elasticsearch::backup']
+    require => Class['elasticsearch::postinstall']
   }
 }

@@ -17,6 +17,8 @@ class elasticsearch::params {
 
   $home_dir = '/usr/share/elasticsearch'
 
+  $backup = true
+
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
       $elasticsearch_dir_conf     = '/etc/elasticsearch'
