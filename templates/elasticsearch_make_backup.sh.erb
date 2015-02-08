@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DATE=`/bin/date +%Y%m%d%H%M`
+
+curl -XPUT http://localhost:9200/_snapshot/backup/${DATE}

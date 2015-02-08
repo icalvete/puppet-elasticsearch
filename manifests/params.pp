@@ -10,6 +10,13 @@ class elasticsearch::params {
 
   $apache                   = false
 
+  $aws_access_key_id     = hiera('AWS_ACCESS_KEY_ID')
+  $aws_secret_access_key = hiera('AWS_SECRET_ACCESS_KEY')
+  $aws_region            = hiera('aws_elasticsearch_backup_region')
+  $aws_bucket            = hiera('aws_elasticsearch_backup_bucket')
+
+  $home_dir = '/usr/share/elasticsearch'
+
   case $::operatingsystem {
     /^(Debian|Ubuntu)$/: {
       $elasticsearch_dir_conf     = '/etc/elasticsearch'

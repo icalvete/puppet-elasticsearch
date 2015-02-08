@@ -22,11 +22,17 @@ class elasticsearch::install {
 
   if $elasticsearch::jetty {
     exec{ 'elasticsearch_install_jetty':
-      command  => "/usr/share/elasticsearch/bin/plugin -url https://oss-es-plugins.s3.amazonaws.com/elasticsearch-jetty/elasticsearch-jetty-1.2.1.zip -install elasticsearch-jetty-1.2.1",
+      command  => '/usr/share/elasticsearch/bin/plugin -url https://oss-es-plugins.s3.amazonaws.com/elasticsearch-jetty/elasticsearch-jetty-1.2.1.zip -install elasticsearch-jetty-1.2.1',
       user     => 'root',
       provider => 'shell',
       unless   => '/usr/bin/test -d /usr/share/elasticsearch/plugins/jetty-1.2.1/',
       require  => Exec['elasticsearch_install_package']
     }
   }
+  
+  elasticsearch::plugin{'elasticsearch/elasticsearch-cloud-aws/2.4.1':
+    regexp  => 'cloud-aws',
+    require => Exec['elasticsearch_install_package']
+  }
+
 }

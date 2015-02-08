@@ -17,7 +17,11 @@ class elasticsearch (
   $elasticsearch_admin_pass = $elasticsearch::params::elasticsearch_admin_pass,
   $elasticsearch_user       = $elasticsearch::params::elasticsearch_user,
   $elasticsearch_user_pass  = $elasticsearch::params::elasticsearch_user_pass,
-  $template                 = undef
+  $template                 = undef,
+  $aws_access_key_id        = $elasticsearch::params::aws_access_key_id,
+  $aws_secret_access_key    = $elasticsearch::params::aws_secret_access_key,
+  $aws_region               = $elasticsearch::params::aws_region,
+  $aws_bucket               = $elasticsearch::params::aws_bucket,
 
 ) inherits elasticsearch::params {
 
@@ -48,7 +52,11 @@ class elasticsearch (
     template => $template,
     require  => Class['elasticsearch::service']
   }
+  
+  class{'elasticsearch::backup':
+    require  => Class['elasticsearch::service']
+  }
   anchor{'elasticsearch::end':
-    require => Class['elasticsearch::service']
+    require => Class['elasticsearch::postinstall', 'elasticsearch::backup']
   }
 }

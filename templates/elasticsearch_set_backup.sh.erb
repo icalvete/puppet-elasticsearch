@@ -1,0 +1,13 @@
+#!/bin/bash
+
+curl -H 'Content-Type: application/json' -XPUT http://localhost:9200/_snapshot/backup -d '
+{
+  "type": "s3",
+  "settings": {
+    "bucket": "<%= scope.lookupvar('elasticsearch::aws_bucket') -%>",
+    "region": "<%= scope.lookupvar('elasticsearch::aws_region') -%>",
+    "access_key": "<%= scope.lookupvar('elasticsearch::aws_access_key_id') -%>",
+    "secret_key": "<%= scope.lookupvar('elasticsearch::aws_secret_access_key') -%>"
+  }
+}
+'
