@@ -29,9 +29,14 @@ class elasticsearch::install {
       require  => Exec['elasticsearch_install_package']
     }
   }
-  
+
   elasticsearch::plugin{'elasticsearch/elasticsearch-cloud-aws/2.4.1':
     regexp  => 'cloud-aws',
+    require => Exec['elasticsearch_install_package']
+  }
+
+  elasticsearch::plugin{'elasticsearch/elasticsearch-lang-mvel/1.4.1':
+    regexp  => 'lang-mvel',
     require => Exec['elasticsearch_install_package']
   }
 
