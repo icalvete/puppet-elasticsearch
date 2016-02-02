@@ -2,6 +2,8 @@
 
 Puppet manifest to install and configure elasticsearch
 
+## This module has been deprecated in favour of https://github.com/elastic/puppet-elasticsearch, the official one.
+
 [![Build Status](https://secure.travis-ci.org/icalvete/puppet-elasticsearch.png)](http://travis-ci.org/icalvete/puppet-elasticsearch)
 
 ##Actions:
